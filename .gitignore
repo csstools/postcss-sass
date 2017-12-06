@@ -1,0 +1,11 @@
+node_modules
+package-lock.json
+.*
+!.appveyor.yml
+!.editorconfig
+!.gitignore
+!.tape.js
+!.travis.yml
+*.log*
+*.result.css
+index.js
