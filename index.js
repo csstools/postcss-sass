@@ -1,5 +1,5 @@
 // tooling
-import mergeSourceMap from 'merge-source-map';
+import mergeSourceMaps from './lib/merge-source-maps';
 import postcss from 'postcss';
 import sassResolve from '@csstools/sass-import-resolve';
 import sass from 'node-sass';
@@ -19,16 +19,13 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 	// sass resolve cache
 	const cache = {};
 
-	// whether this is the first plugin running
-	const firstPlugin = result.processor.plugins[0] === result.lastPlugin;
-
 	return new Promise(
 		// promise sass results
 		(resolve, reject) => sass.render(
 			// pass options directly into node-sass
 			Object.assign({}, opts, requiredSassConfig, {
-				file: postConfig.from,
-				outFile: postConfig.to,
+				file: `${postConfig.from}#sass`,
+				outFile: postConfig.from,
 				data: postCSS,
 				importer(id, parentId, done) {
 					// resolve the absolute parent
@@ -61,14 +58,13 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
 		)
 	).then(
-		// update root to post-node-sass ast
 		({ css: sassCSS, map: sassMap }) => {
+			// update root to post-node-sass ast
 			result.root = postcss.parse(
 				sassCSS.toString(),
 				Object.assign({}, postConfig, {
 					map: {
-						// merge source maps
-						prev: firstPlugin ? JSON.parse(sassMap) : mergeSourceMap(
+						prev: mergeSourceMaps(
 							postMap.toJSON(),
 							JSON.parse(sassMap)
 						)

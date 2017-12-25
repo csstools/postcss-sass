@@ -1,4 +1,4 @@
-# Contributing to PostCSS Node Sass
+# Contributing to PostCSS Sass
 
 You want to help? You rock! Now, take a moment to be sure your contributions
 make sense to everyone else.
