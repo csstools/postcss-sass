@@ -15,12 +15,11 @@
     "lib"
   ],
   "scripts": {
-    "clean": "git clean -X -d -f",
     "prepublishOnly": "npm test",
-    "pretest": "rollup --silent -c .rollup.js",
+    "pretest": "rollup -c .rollup.js --silent",
     "test": "echo 'Running tests...'; npm run test:ec && npm run test:js && npm run test:tape",
     "test:ec": "echint --ignore index.bundle.js test",
-    "test:js": "eslint index.js --cache",
+    "test:js": "eslint *.js --cache --ignore-path .gitignore --quiet",
     "test:tape": "postcss-tape"
   },
   "engines": {
