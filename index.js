@@ -21,42 +21,60 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 
 	return new Promise(
 		// promise sass results
-		(resolve, reject) => sass.render(
-			// pass options directly into node-sass
-			Object.assign({}, opts, requiredSassConfig, {
-				file: `${postConfig.from}#sass`,
-				outFile: postConfig.from,
-				data: postCSS,
-				importer(id, parentId, done) {
-					// resolve the absolute parent
-					const parent = pathResolve(parentId);
+		(resolve, reject) => {
 
-					// cwds is the list of all directories to search
-					const cwds = [dirname(parent)].concat(includePaths).map(includePath => pathResolve(includePath));
+			try {
+			
+				let sassResult = sass.renderSync(
+					// pass options directly into node-sass
+					Object.assign({}, opts, requiredSassConfig, {
+						file: `${postConfig.from}#sass`,
+						outFile: postConfig.from,
+						data: postCSS,
+						importer(id, parentId, done) {
 
-					cwds.reduce(
-						// resolve the first available files
-						(promise, cwd) => promise.catch(
-							() => sassResolve(id, { cwd, cache, readFile: true })
-						),
-						Promise.reject()
-					).then(
-						({ file, contents }) => {
-							// push the dependency to watch tasks
-							result.messages.push({ type: 'dependency', file, parent });
+							// resolve the absolute parent
+							const parent = pathResolve(parentId);
 
-							// pass the file and contents back to sass
-							done({ file, contents });
-						},
-						importerError => {
-							// otherwise, pass the error
-							done(importerError);
+							// cwds is the list of all directories to search
+							const cwds = [dirname(parent)].concat(includePaths).map(includePath => pathResolve(includePath));
+
+							cwds.reduce(
+								// resolve the first available files
+								(promise, cwd) => promise.catch(
+									() => sassResolve(id, { cwd, cache, readFile: true })
+								),
+								Promise.reject()
+							).then(
+								({ file, contents }) => {
+									// push the dependency to watch tasks
+									result.messages.push({ type: 'dependency', file, parent });
+
+									// pass the file and contents back to sass
+									if(done) {
+										// done is undefined, for example, when SASS issues a (deprecation) warning
+										// anything else to be done here?
+										done({ file, contents });
+									}
+								},
+								importerError => {
+									// otherwise, pass the error
+									done(importerError);
+								}
+							);
 						}
-					);
-				}
-			}),
-			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
-		)
+					})
+				);
+
+				resolve(sassResult);
+
+			} catch(sassError){
+			
+				reject(sassError);
+		
+			}
+
+		}
 	).then(
 		({ css: sassCSS, map: sassMap }) => {
 			// update root to post-node-sass ast

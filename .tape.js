@@ -42,6 +42,16 @@ module.exports = {
 				require('.')
 			),
 			processOptions: processOptions
+		},
+		'sass-error': {
+			message: 'exits cleanly on SASS syntax error',
+			error: {
+				reason: /^Missed semicolon/
+			},
+			plugin: () => require('postcss')(
+				require('.')
+			),
+			processOptions: processOptions
 		}
 	}
 };
