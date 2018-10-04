@@ -1,24 +1,22 @@
 {
   "name": "@csstools/postcss-sass",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Use Sass as a PostCSS plugin",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
   "repository": "jonathantneal/postcss-sass",
   "homepage": "https://github.com/jonathantneal/postcss-sass#readme",
   "bugs": "https://github.com/jonathantneal/postcss-sass/issues",
-  "main": "index.bundle.js",
-  "module": "index.js",
+  "main": "index.cjs.js",
+  "module": "index.es.mjs",
   "files": [
-    "index.js",
-    "index.bundle.js",
-    "lib"
+    "index.es.mjs",
+    "index.cjs.js"
   ],
   "scripts": {
     "prepublishOnly": "npm test",
     "pretest": "rollup -c .rollup.js --silent",
-    "test": "echo 'Running tests...'; npm run test:ec && npm run test:js && npm run test:tape",
-    "test:ec": "echint --ignore index.bundle.js test",
+    "test": "npm run test:js && npm run test:tape",
     "test:js": "eslint *.js --cache --ignore-path .gitignore --quiet",
     "test:tape": "postcss-tape"
   },
@@ -26,24 +24,24 @@
     "node": ">=4.0.0"
   },
   "dependencies": {
-    "@csstools/sass-import-resolve": "^1.0",
-    "node-sass": "^4.7",
-    "postcss": "^6.0",
-    "source-map": "^0.6"
+    "@csstools/sass-import-resolve": "^1.0.0",
+    "node-sass": "^4.9.3",
+    "postcss": "^7.0.5",
+    "source-map": "~0.7.3"
   },
   "devDependencies": {
-    "babel-core": "^6.26",
-    "babel-eslint": "^8.1",
-    "babel-preset-env": "^1.6",
-    "echint": "^4.0",
-    "eslint": "^4.14",
-    "eslint-config-dev": "2.0",
-    "postcss-import": "^11.0",
-    "postcss-tape": "2.2",
-    "postcss-unroot": "^1.0",
-    "pre-commit": "^1.2",
-    "rollup": "^0.53",
-    "rollup-plugin-babel": "^3.0"
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "echint": "^4.0.1",
+    "eslint": "^5.6.1",
+    "eslint-config-dev": "2.0.0",
+    "postcss-import": "^12.0.0",
+    "postcss-tape": "2.2.0",
+    "postcss-unroot": "^1.0.2",
+    "pre-commit": "^1.2.2",
+    "rollup": "^0.66.4",
+    "rollup-plugin-babel": "^4.0.1"
   },
   "eslintConfig": {
     "extends": "dev",
