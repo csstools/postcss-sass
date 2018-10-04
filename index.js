@@ -58,20 +58,18 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
 		)
 	).then(
-		({ css: sassCSS, map: sassMap }) => {
+		({ css: sassCSS, map: sassMap }) => mergeSourceMaps(
+			postMap.toJSON(),
+			JSON.parse(sassMap)
+		).then(prev => {
 			// update root to post-node-sass ast
 			result.root = postcss.parse(
 				sassCSS.toString(),
 				Object.assign({}, postConfig, {
-					map: {
-						prev: mergeSourceMaps(
-							postMap.toJSON(),
-							JSON.parse(sassMap)
-						)
-					}
+					map: { prev }
 				})
 			);
-		}
+		})
 	);
 });
 
