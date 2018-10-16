@@ -85,6 +85,23 @@ gulp.task('css', function () {
 });
 ```
 
+The standard CSS parser included with PostCSS may not be able to parse code with SCSS specific features like single line comment. To parse SCSS correctly, you need to specify `{syntax: require('postcss-scss')}` to PostCSS options.
+
+```js
+var postcss = require('gulp-postcss');
+var scss = require('postcss-scss');
+
+gulp.task('css', function () {
+  return gulp.src('src/*.scss').pipe(
+    postcss([
+      require('@csstools/postcss-sass')(/* node-sass options */)
+    ], {syntax: scss})
+  ).pipe(
+    gulp.dest('test')
+  );
+});
+```
+
 #### Grunt
 
 Add [Grunt PostCSS] to your build tool:
