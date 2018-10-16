@@ -74,7 +74,7 @@ npm install postcss-scss --save-dev
 module.exports = {
   syntax: 'postcss-scss',
   plugins: {
-    require('@csstools/postcss-sass')(/* node-sass options */)
+    syntax: require('@csstools/postcss-sass')(/* node-sass options */)
   }
 }
 ```
