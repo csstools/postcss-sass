@@ -70,13 +70,14 @@ npm install postcss-scss --save-dev
 ```
 
 ```js
-// postcss.config.js
-module.exports = {
-  syntax: 'postcss-scss',
-  plugins: {
-    syntax: require('@csstools/postcss-sass')(/* node-sass options */)
-  }
-}
+const postcss = require('postcss');
+const postcssSass = require('@csstools/postcss-sass');
+
+postcss([
+  postcssSass(/* pluginOptions */)
+]).process(YOUR_CSS, {
+  syntax: 'postcss-scss'
+});
 ```
 
 #### Gulp
