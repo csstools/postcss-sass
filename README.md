@@ -61,6 +61,25 @@ postcss([
 ]).process(YOUR_CSS);
 ```
 
+The standard CSS parser included with PostCSS may not be able to parse SCSS
+specific features like inline comments. To accurately parse SCSS, use
+the [SCSS Parser].
+
+```bash
+npm install postcss-scss --save-dev
+```
+
+```js
+const postcss = require('postcss');
+const postcssSass = require('@csstools/postcss-sass');
+
+postcss([
+  postcssSass(/* pluginOptions */)
+]).process(YOUR_CSS, {
+  syntax: 'postcss-scss'
+});
+```
+
 #### Gulp
 
 Add [Gulp PostCSS] to your build tool:
@@ -135,3 +154,4 @@ not include `file`, `outFile`, `data`, `importer`, `omitSourceMapUrl`,
 [PostCSS]: https://github.com/postcss/postcss
 [PostCSS Sass]: https://github.com/jonathantneal/postcss-sass
 [Sass]: https://github.com/sass/node-sass
+[SCSS Parser]: https://github.com/postcss/postcss-scss
