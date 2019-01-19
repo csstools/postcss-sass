@@ -2,7 +2,7 @@
 import mergeSourceMaps from './lib/merge-source-maps';
 import postcss from 'postcss';
 import sassResolve from '@csstools/sass-import-resolve';
-import sass from 'node-sass';
+import sass from 'sass';
 import { dirname, resolve as pathResolve } from 'path';
 
 // transform css with sass
