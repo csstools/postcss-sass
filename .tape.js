@@ -9,7 +9,8 @@ module.exports = {
 	'postcss-sass': {
 		'basic': {
 			message: 'supports basic usage',
-			processOptions: processOptions
+			processOptions: processOptions,
+			source: 'basic.scss'
 		},
 		'basic:sassopts': {
 			message: 'supports sass options usage',
@@ -18,7 +19,8 @@ module.exports = {
 				indentWidth: 1,
 				outputStyle: 'expanded'
 			},
-			processOptions: processOptions
+			processOptions: processOptions,
+			source: 'basic.scss'
 		},
 		'basic:mixed': {
 			message: 'supports mixed (postcss-unroot, postcss-sass) usage',
@@ -26,22 +28,25 @@ module.exports = {
 				require('postcss-unroot'),
 				require('.')
 			),
-			processOptions: processOptions
+			processOptions: processOptions,
+			source: 'basic.scss'
 		},
 		'imports': {
 			message: 'supports imports usage',
 			plugin: () => require('postcss')(
 				require('.')
 			),
-			processOptions: processOptions
+			processOptions: processOptions,
+			source: 'imports.scss'
 		},
-		'imports:postcss': {
+		'css-imports': {
 			message: 'supports imports (postcss-import, postcss-sass) usage',
 			plugin: () => require('postcss')(
 				require('postcss-import'),
 				require('.')
 			),
-			processOptions: processOptions
+			processOptions: processOptions,
+			source: 'css-imports.scss'
 		}
 	}
 };
