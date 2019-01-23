@@ -1,5 +1,10 @@
 # Changes to PostCSS Sass
 
+### 4.0.0 (January 23, 2018)
+
+- Replaced: `node-sass` with `dart-sass`
+- Updated: `postcss` to 7.0.14 (patch)
+
 ### 3.0.0 (October 4, 2018)
 
 - Fixed: issue with sourcemaps 0.7.x returning a Promise instead of an Object

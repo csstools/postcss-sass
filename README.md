@@ -3,7 +3,7 @@
 [![NPM Version][npm-img]][npm-url]
 [![Linux Build Status][cli-img]][cli-url]
 [![Windows Build Status][win-img]][win-url]
-[![Gitter Chat][git-img]][git-url]
+[![Support Chat][git-img]][git-url]
 
 [PostCSS Sass] lets you use [Sass] as a [PostCSS] plugin.
 
@@ -20,14 +20,12 @@ $primary-color: #333;
 
 :root {
   color: #333;
-  font: 100% Helvetica, sans-serif; }
+  font: 100% Helvetica, sans-serif;
+}
 ```
 
-[PostCSS Sass] uses [node-sass][Sass] to provide binding for Node.js to
-[LibSass], the C version of Sass.
-
-By using [PostCSS Sass], you can safely run transforms before and after Sass,
-watch for changes to Sass imports, and preserve source maps.
+[PostCSS Sass] uses [dart-sass], letting you safely run transforms before and
+after Sass, watching for changes to Sass imports, and preserving source maps.
 
 ## Usage
 
@@ -133,25 +131,22 @@ grunt.initConfig({
 
 ## Options
 
-[PostCSS Sass] options are a limited subset of [Node-sass options], which do
-not include `file`, `outFile`, `data`, `importer`, `omitSourceMapUrl`,
-`sourceMap`, and `sourceMapContents`, as these must be handled by [PostCSS] and
-[PostCSS Sass].
+[PostCSS Sass] options are directly forwarded to [dart-sass options].
 
-[npm-url]: https://www.npmjs.com/package/@csstools/postcss-sass
-[npm-img]: https://img.shields.io/npm/v/@csstools/postcss-sass.svg
-[cli-url]: https://travis-ci.org/jonathantneal/postcss-sass
 [cli-img]: https://img.shields.io/travis/jonathantneal/postcss-sass.svg
-[win-url]: https://ci.appveyor.com/project/jonathantneal/postcss-sass
-[win-img]: https://img.shields.io/appveyor/ci/jonathantneal/postcss-sass.svg
+[cli-url]: https://travis-ci.org/jonathantneal/postcss-sass
+[git-img]: https://img.shields.io/badge/support-chat-blue.svg
 [git-url]: https://gitter.im/postcss/postcss
-[git-img]: https://img.shields.io/badge/chat-gitter-blue.svg
+[npm-img]: https://img.shields.io/npm/v/@csstools/postcss-sass.svg
+[npm-url]: https://www.npmjs.com/package/@csstools/postcss-sass
+[win-img]: https://img.shields.io/appveyor/ci/jonathantneal/postcss-sass.svg
+[win-url]: https://ci.appveyor.com/project/jonathantneal/postcss-sass
 
 [Gulp PostCSS]: https://github.com/postcss/gulp-postcss
 [Grunt PostCSS]: https://github.com/nDmitry/grunt-postcss
-[LibSass]: https://github.com/sass/libsass
-[Node-sass options]: https://github.com/sass/node-sass#options
+[dart-sass]: https://github.com/sass/dart-sass
+[dart-sass options]: https://github.com/sass/dart-sass#javascript-api
 [PostCSS]: https://github.com/postcss/postcss
 [PostCSS Sass]: https://github.com/jonathantneal/postcss-sass
-[Sass]: https://github.com/sass/node-sass
+[Sass]: https://github.com/sass/dart-sass
 [SCSS Parser]: https://github.com/postcss/postcss-scss
