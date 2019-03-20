@@ -16,12 +16,15 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 	// include paths
 	const includePaths = [].concat(opts && opts.includePaths || []);
 
+	// sass engine to use
+	const sassEngine = opts && opts.sass || sass
+
 	// sass resolve cache
 	const cache = {};
 
 	return new Promise(
 		// promise sass results
-		(resolve, reject) => sass.render(
+		(resolve, reject) => sassEngine.render(
 			// pass options directly into node-sass
 			Object.assign({}, opts, requiredSassConfig, {
 				file: `${postConfig.from}#sass`,
