@@ -18,9 +18,9 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 
 	// sass resolve cache
 	const cache = {};
-	
-	// sass importer
-	const sassImporter = opts.importer || (id, parentId, done) => {
+
+	// replication of the default sass file importer
+	const defaultSassImporter = (id, parentId, done) => {
 		// resolve the absolute parent
 		const parent = pathResolve(parentId);
 
@@ -44,6 +44,9 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 			}
 		);
 	}
+	
+	// sass importer
+	const sassImporter = opts.importer || defaultSassImporter
 
 	return new Promise(
 		// promise sass results
