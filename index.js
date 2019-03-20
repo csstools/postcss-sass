@@ -46,7 +46,7 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 	}
 	
 	// sass importer
-	const sassImporter = opts.importer || defaultSassImporter
+	const sassImporter = (opts && opts.importer) || defaultSassImporter
 
 	return new Promise(
 		// promise sass results
