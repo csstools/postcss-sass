@@ -44,7 +44,7 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 			}
 		);
 	}
-	
+
 	// sass importer
 	const sassImporter = opts && opts.importer || defaultSassImporter
 
@@ -69,8 +69,11 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 						done(importerResult)
 					}
 
+					// strip the #sass suffix we added
+					const prev = parentId.replace(/#sass$/, '')
+
 					// call the sass importer and catch its output
-					sassImporter.call(this, id, parentId, doneWrap)
+					sassImporter.call(this, id, prev, doneWrap)
 				}
 			}),
 			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
