@@ -24,7 +24,7 @@ $primary-color: #333;
 }
 ```
 
-[PostCSS Sass] uses [dart-sass], letting you safely run transforms before and
+[PostCSS Sass] uses [dart-sass][pr13], letting you safely run transforms before and
 after Sass, watching for changes to Sass imports, and preserving source maps.
 
 ## Usage
@@ -94,7 +94,7 @@ var postcss = require('gulp-postcss');
 gulp.task('css', function () {
   return gulp.src('./src/*.css').pipe(
     postcss([
-      require('@csstools/postcss-sass')(/* node-sass options */)
+      require('@csstools/postcss-sass')(/* dart-sass options */)
     ])
   ).pipe(
     gulp.dest('.')
@@ -119,7 +119,7 @@ grunt.initConfig({
   postcss: {
     options: {
       use: [
-        require('@csstools/postcss-sass')(/* node-sass options */)
+        require('@csstools/postcss-sass')(/* dart-sass options */)
       ]
     },
     dist: {
@@ -141,6 +141,8 @@ grunt.initConfig({
 [npm-url]: https://www.npmjs.com/package/@csstools/postcss-sass
 [win-img]: https://img.shields.io/appveyor/ci/jonathantneal/postcss-sass.svg
 [win-url]: https://ci.appveyor.com/project/jonathantneal/postcss-sass
+
+[pr13]: https://github.com/jonathantneal/postcss-sass/pull/13
 
 [Gulp PostCSS]: https://github.com/postcss/gulp-postcss
 [Grunt PostCSS]: https://github.com/nDmitry/grunt-postcss
