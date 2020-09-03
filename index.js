@@ -30,7 +30,7 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 				file: `${postConfig.from}#sass`,
 				outFile: postConfig.from,
 				data: postCSS,
-				importer(id, parentId, done) {
+				importer: opts && opts.importer || ((id, parentId, done) => {
 					// resolve the absolute parent
 					const parent = pathResolve(parentId);
 
@@ -56,7 +56,7 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 							done(importerError);
 						}
 					);
-				}
+				})
 			}),
 			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
 		)
