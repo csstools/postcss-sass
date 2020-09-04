@@ -22,6 +22,37 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 	// sass resolve cache
 	const cache = {};
 
+	//custom importer
+	let customImporter = opts && opts.importer;
+
+	function sassImporter(id, parentId, done) {
+		// resolve the absolute parent
+		const parent = pathResolve(parentId);
+
+		// cwds is the list of all directories to search
+		const cwds = [dirname(parent)].concat(includePaths).map(includePath => pathResolve(includePath));
+
+		cwds.reduce(
+			// resolve the first available files
+			(promise, cwd) => promise.catch(
+				() => sassResolve(id, { cwd, cache, readFile: true })
+			),
+			Promise.reject()
+		).then(
+			({ file, contents }) => {
+				// push the dependency to watch tasks
+				result.messages.push({ type: 'dependency', file, parent });
+
+				// pass the file and contents back to sass
+				done({ file, contents });
+			},
+			importerError => {
+				// otherwise, pass the error
+				done(importerError);
+			}
+		);
+	}
+
 	return new Promise(
 		// promise sass results
 		(resolve, reject) => sassEngine.render(
@@ -30,33 +61,7 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 				file: `${postConfig.from}#sass`,
 				outFile: postConfig.from,
 				data: postCSS,
-				importer: opts && opts.importer || ((id, parentId, done) => {
-					// resolve the absolute parent
-					const parent = pathResolve(parentId);
-
-					// cwds is the list of all directories to search
-					const cwds = [dirname(parent)].concat(includePaths).map(includePath => pathResolve(includePath));
-
-					cwds.reduce(
-						// resolve the first available files
-						(promise, cwd) => promise.catch(
-							() => sassResolve(id, { cwd, cache, readFile: true })
-						),
-						Promise.reject()
-					).then(
-						({ file, contents }) => {
-							// push the dependency to watch tasks
-							result.messages.push({ type: 'dependency', file, parent });
-
-							// pass the file and contents back to sass
-							done({ file, contents });
-						},
-						importerError => {
-							// otherwise, pass the error
-							done(importerError);
-						}
-					);
-				})
+				importer: customImporter ? [... Array.isArray(customImporter) ? customImporter: [customImporter], sassImporter] : [sassImporter],
 			}),
 			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
 		)
