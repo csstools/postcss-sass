@@ -23,7 +23,7 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 	const cache = {};
 
 	//custom importer
-	let customImporter = opts && opts.importer;
+	const customImporter = opts && opts.importer;
 
 	function sassImporter(id, parentId, done) {
 		// resolve the absolute parent
