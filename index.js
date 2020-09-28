@@ -22,6 +22,35 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 	// sass resolve cache
 	const cache = {};
 
+	// replication of the default sass file importer
+	const defaultSassImporter = (id, parentId, done) => {
+		// resolve the absolute parent
+		const parent = pathResolve(parentId);
+
+		// cwds is the list of all directories to search
+		const cwds = [dirname(parent)].concat(includePaths).map(includePath => pathResolve(includePath));
+
+		cwds.reduce(
+			// resolve the first available files
+			(promise, cwd) => promise.catch(
+				() => sassResolve(id, { cwd, cache, readFile: true })
+			),
+			Promise.reject()
+		).then(
+			({ file, contents }) => {
+				// pass the file and contents back to sass
+				done({ file, contents });
+			},
+			importerError => {
+				// otherwise, pass the error
+				done(importerError);
+			}
+		);
+	}
+
+	// sass importer
+	const sassImporter = opts && opts.importer || defaultSassImporter
+
 	return new Promise(
 		// promise sass results
 		(resolve, reject) => sassEngine.render(
@@ -31,31 +60,23 @@ export default postcss.plugin('postcss-sass', opts => (root, result) => {
 				outFile: postConfig.from,
 				data: postCSS,
 				importer(id, parentId, done) {
-					// resolve the absolute parent
-					const parent = pathResolve(parentId);
+					const doneWrap = (importerResult) => {
+						const file = importerResult && importerResult.file
+						if (file) {
+							const parent = pathResolve(parentId);
 
-					// cwds is the list of all directories to search
-					const cwds = [dirname(parent)].concat(includePaths).map(includePath => pathResolve(includePath));
-
-					cwds.reduce(
-						// resolve the first available files
-						(promise, cwd) => promise.catch(
-							() => sassResolve(id, { cwd, cache, readFile: true })
-						),
-						Promise.reject()
-					).then(
-						({ file, contents }) => {
 							// push the dependency to watch tasks
 							result.messages.push({ type: 'dependency', file, parent });
-
-							// pass the file and contents back to sass
-							done({ file, contents });
-						},
-						importerError => {
-							// otherwise, pass the error
-							done(importerError);
 						}
-					);
+
+						done(importerResult)
+					}
+
+					// strip the #sass suffix we added
+					const prev = parentId.replace(/#sass$/, '')
+
+					// call the sass importer and catch its output
+					sassImporter.call(this, id, prev, doneWrap)
 				}
 			}),
 			(sassError, sassResult) => sassError ? reject(sassError) : resolve(sassResult)
