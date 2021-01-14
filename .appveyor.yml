@@ -1,18 +1,18 @@
 # https://www.appveyor.com/docs/appveyor-yml
 
 environment:
-  matrix:
-    - nodejs_version: 8
+    matrix:
+        - nodejs_version: 12
 
 version: "{build}"
 build: off
 deploy: off
 
 install:
-  - ps: Install-Product node $env:nodejs_version
-  - npm install
+    - ps: Install-Product node $env:nodejs_version
+    - npm install
 
 test_script:
-  - node --version
-  - npm --version
-  - cmd: "npm test"
+    - node --version
+    - npm --version
+    - cmd: "npm test"
