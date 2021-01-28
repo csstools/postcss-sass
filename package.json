@@ -25,9 +25,11 @@
   },
   "dependencies": {
     "@csstools/sass-import-resolve": "^1.0.0",
-    "postcss": "^8.2.4",
     "sass": "^1.32.4",
     "source-map": "~0.7.3"
+  },
+  "peerDependencies": {
+    "postcss": "^8.2.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
