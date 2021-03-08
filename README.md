@@ -32,7 +32,7 @@ after Sass, watching for changes to Sass imports, and preserving source maps.
 Add [PostCSS Sass] to your build tool:
 
 ```sh
-npm install @csstools/postcss-sass --save-dev
+npm install postcss @csstools/postcss-sass --save-dev
 ```
 
 #### Node
@@ -44,12 +44,6 @@ require('@csstools/postcss-sass').process(YOUR_CSS);
 ```
 
 #### PostCSS
-
-Add [PostCSS] to your build tool:
-
-```sh
-npm install postcss --save-dev
-```
 
 Use [PostCSS Sass] as a plugin:
 
