@@ -68,7 +68,7 @@ const postcssSass = require('@csstools/postcss-sass');
 postcss([
   postcssSass(/* pluginOptions */)
 ]).process(YOUR_CSS, {
-  syntax: 'postcss-scss'
+  syntax: require('postcss-scss')
 });
 ```
 
