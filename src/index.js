@@ -89,8 +89,8 @@ const plugin = (opts = {}) => {
 							data: postCSS,
 							importer(id, parentId, done) {
 								const doneWrap = (importerResult) => {
-									const file =
-                                        importerResult && importerResult.file;
+									const file = importerResult && importerResult.file;
+
 									if (file) {
 										const parent = pathResolve(parentId);
 

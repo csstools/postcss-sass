@@ -21,17 +21,6 @@ module.exports = {
 		processOptions,
 		source: 'basic.scss',
 	},
-	'basic:mixed': {
-		message: 'supports mixed (postcss-unroot, postcss-sass) usage',
-		plugin: require('postcss')([
-			// In the previous test, unroot wouldn't do anything.
-			// I'm pretty sure that is a bug, so I changed the expected css file
-			require('postcss-unroot'),
-			require('.'),
-		]),
-		processOptions,
-		source: 'basic.scss',
-	},
 	'imports': {
 		message: 'supports imports usage',
 		plugin: require('postcss')(
