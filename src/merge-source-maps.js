@@ -17,6 +17,7 @@ export default (...maps) => {
 	return consumersPromise.then(
 		consumers => consumers.forEach(
 			consumer => {
+
 				// copy each original mapping to the new sourcemap
 				consumer.eachMapping(
 					mapping => {

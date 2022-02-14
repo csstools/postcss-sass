@@ -1,17 +1,16 @@
-import babel from "@rollup/plugin-babel";
+import babel from '@rollup/plugin-babel';
 
 export default {
-    input: "index.js",
-    output: [
-        {  file: "index.cjs.js", format: "cjs" },
-        { file: "index.es.mjs", format: "es" },
-    ],
-    plugins: [
-        babel({
-            babelHelpers: "bundled",
-            presets: [
-                ["@babel/preset-env", { modules: false, targets: { node: 6 } }],
-            ],
-        }),
-    ],
+	input: 'src/index.js',
+	output: [
+		{ file: 'dist/index.cjs', format: 'cjs', sourcemap: false, strict: false, exports: 'auto' },
+		{ file: 'dist/index.mjs', format: 'esm', sourcemap: false, strict: false, exports: 'auto' },
+	],
+	plugins: [
+		babel({
+			presets: [
+				['@babel/env', { modules: false, targets: { node: 12 } }],
+			],
+		}),
+	],
 };
