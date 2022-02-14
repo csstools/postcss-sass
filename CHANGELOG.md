@@ -1,5 +1,9 @@
 # Changes to PostCSS Sass
 
+### 5.0.0 (February 14, 2022)
+
+- Updated to support PostCSS 8 (breaking)
+
 ### 4.0.0 (January 23, 2018)
 
 - Replaced: `node-sass` with `dart-sass`

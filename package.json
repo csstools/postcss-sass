@@ -91,6 +91,9 @@
     },
     "root": true
   },
+  "postcssConfig": {
+    "config": ".tape.js"
+  },
   "keywords": [
     "postcss",
     "css",
