@@ -1,5 +1,9 @@
 # Changes to PostCSS Sass
 
+### 5.0.1 (March 8, 2022)
+
+- Fixes an issue with import files not being sent for processors to pick up. [#31](https://github.com/csstools/postcss-sass/pull/31)
+
 ### 5.0.0 (February 14, 2022)
 
 - Updated to support PostCSS 8 (breaking)
