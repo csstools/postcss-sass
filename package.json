@@ -1,6 +1,6 @@
 {
   "name": "@csstools/postcss-sass",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Use Sass as a PostCSS plugin",
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
