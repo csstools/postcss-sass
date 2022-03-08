@@ -115,8 +115,29 @@ const plugin = (opts = {}) => {
 						(sassError, sassResult) =>
 							sassError ? reject(sassError) : resolve(sassResult),
 					),
-			).then(({ css: sassCSS, map: sassMap }) =>
-				mergeSourceMaps(postMap.toJSON(), JSON.parse(sassMap)).then(
+			).then(({ css: sassCSS, map: sassMap, stats }) => {
+				const parent = pathResolve(postConfig.from);
+
+				// use stats.includedFiles to get the full list of dependencies.  Importer will not receive relative imports.  See https://github.com/sass/dart-sass/issues/574
+				for (const includedFile of stats.includedFiles) {
+					// strip the #sass suffix we added
+					const file = pathResolve(includedFile.replace(/#sass$/, ''));
+
+					// don't include the parent as a dependency of itself
+					if (file === parent) {
+						continue;
+					}
+
+					// push the dependency to watch tasks
+					result.messages.push({
+						type: 'dependency',
+						plugin: 'postcss-sass',
+						file,
+						parent,
+					});
+				}
+
+				return mergeSourceMaps(postMap.toJSON(), JSON.parse(sassMap)).then(
 					(prev) => {
 						// update root to post-node-sass ast
 						result.root = parse(
@@ -126,8 +147,8 @@ const plugin = (opts = {}) => {
 							}),
 						);
 					},
-				),
-			);
+				);
+			});
 		},
 	};
 };
