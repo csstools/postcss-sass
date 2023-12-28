@@ -183,12 +183,13 @@ const plugin = (opts = {}) => {
           const doneWrap = importerResult => {
             const file = importerResult && importerResult.file;
             if (file) {
-              const parent = path.resolve(parentId);
+              const parent = path.resolve(parentId.replace(/#sass$/, ''));
 
               // push the dependency to watch tasks
               result.messages.push({
                 type: 'dependency',
-                file,
+                plugin: 'postcss-sass',
+                file: file,
                 parent
               });
             }
@@ -219,12 +220,14 @@ const plugin = (opts = {}) => {
           }
 
           // push the dependency to watch tasks
-          result.messages.push({
-            type: 'dependency',
-            plugin: 'postcss-sass',
-            file,
-            parent
-          });
+          if (file) {
+            result.messages.push({
+              type: 'dependency',
+              plugin: 'postcss-sass',
+              file: file,
+              parent: parent
+            });
+          }
         }
         return mergeSourceMaps(postMap.toJSON(), JSON.parse(sassMap)).then(prev => {
           // update root to post-node-sass ast

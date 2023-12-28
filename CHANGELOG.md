@@ -1,5 +1,9 @@
 # Changes to PostCSS Sass
 
+### 5.1.1 (December 28, 2023)
+
+- Make PostCSS dependency messages more consistent.
+
 ### 5.1.0 (December 28, 2023)
 
 - Updated: `dart-sass` to 1.69.5 (minor)
