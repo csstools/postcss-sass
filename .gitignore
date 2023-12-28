@@ -1,6 +1,5 @@
 node_modules
 index.*.*
-package-lock.json
 *.log*
 *.result.css
 .*
@@ -10,4 +9,3 @@ package-lock.json
 !.rollup.js
 !.tape.js
 !.github
-dist

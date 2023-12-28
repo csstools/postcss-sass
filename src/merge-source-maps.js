@@ -11,7 +11,7 @@ export default (...maps) => {
 
 	// existing sourcemaps
 	const consumersPromise = Promise.all(maps.map(
-		map => new SourceMapConsumer(map)
+		map => new SourceMapConsumer(map),
 	));
 
 	return consumersPromise.then(
@@ -27,18 +27,18 @@ export default (...maps) => {
 							generator.addMapping({
 								generated: {
 									line: mapping.generatedLine,
-									column: mapping.generatedColumn
+									column: mapping.generatedColumn,
 								},
 								original: {
 									// use positive numbers to work around sass/libsass#2312
 									line: Math.abs(originalPosition.line),
-									column: Math.abs(originalPosition.column)
+									column: Math.abs(originalPosition.column),
 								},
 								source: originalPosition.source,
-								name: originalPosition.name
+								name: originalPosition.name,
 							});
 						}
-					}
+					},
 				);
 
 				// copy each original source to the new sourcemap
@@ -51,10 +51,10 @@ export default (...maps) => {
 						if (content !== null) {
 							generator.setSourceContent(source, content);
 						}
-					}
+					},
 				);
-			}
-		)
+			},
+		),
 	).then(
 		() => {
 			// merged map as json
@@ -62,19 +62,19 @@ export default (...maps) => {
 
 			// clean all special sass sources in merged map
 			mergedMap.sources = mergedMap.sources.map(
-				source => source.replace(sassMatch, '')
+				source => source.replace(sassMatch, ''),
 			);
 
 			return mergedMap;
-		}
+		},
 	);
-}
+};
 
 function originalPositionFor(mapping, consumers) {
 	// initial positioning
 	let originalPosition = {
 		line: mapping.generatedLine,
-		column: mapping.generatedColumn
+		column: mapping.generatedColumn,
 	};
 
 	// special sass sources are mapped in reverse
@@ -87,7 +87,7 @@ function originalPositionFor(mapping, consumers) {
 					originalPosition = possiblePosition;
 				}
 			}
-		}
+		},
 	);
 
 	// regular sources are mapped regularly
@@ -100,7 +100,7 @@ function originalPositionFor(mapping, consumers) {
 					originalPosition = possiblePosition;
 				}
 			}
-		}
+		},
 	);
 
 	return originalPosition;
