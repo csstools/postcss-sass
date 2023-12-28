@@ -8,6 +8,7 @@ export default {
 	],
 	plugins: [
 		babel({
+			babelHelpers: 'bundled',
 			presets: [
 				['@babel/env', { modules: false, targets: { node: 12 } }],
 			],

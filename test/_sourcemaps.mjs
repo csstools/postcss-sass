@@ -25,12 +25,14 @@ test('produces correct sourcemaps', async () => {
 	assert.equal(result.css, expect);
 	assert.equal(result.warnings().length, 0);
 
+	const actual = result.map.toJSON();
+	actual.sources.splice(0, 1);
+
 	assert.deepStrictEqual(
-		result.map.toJSON(),
+		actual,
 		{
 			version: 3,
 			sources: [
-				'file:///Users/romainmenke/projects/postcss-sass/basic.scss%23sass',
 				'basic.scss',
 			],
 			names: [],
