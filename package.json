@@ -47,10 +47,10 @@
     "@rollup/plugin-babel": "^6.0.4",
     "@babel/eslint-parser": "^7.23.3",
     "eslint": "^8.56.0",
-    "eslint-config-dev": "3.3.1",
+    "eslint-config-dev": "^3.3.1",
     "postcss": "^8.4.32",
     "postcss-import": "^15.1.0",
-    "@csstools/postcss-tape": "4.1.0",
+    "@csstools/postcss-tape": "^4.1.1",
     "rollup": "^4.9.1"
   },
   "eslintConfig": {

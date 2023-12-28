@@ -16,6 +16,10 @@ postcssTape(plugin)({
 		},
 		source: 'basic.scss',
 	},
+	'empty': {
+		message: 'supports empty files',
+		source: 'empty.scss',
+	},
 	'imports': {
 		message: 'supports imports usage',
 		source: 'imports.scss',
