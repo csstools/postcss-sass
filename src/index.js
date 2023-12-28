@@ -1,7 +1,7 @@
 // tooling
 import mergeSourceMaps from './merge-source-maps';
 import sassResolve from '@csstools/sass-import-resolve';
-import sass from 'sass';
+import * as sass from 'sass';
 import { dirname, resolve as pathResolve } from 'path';
 
 const requiredPostConfig = {
