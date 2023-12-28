@@ -1,5 +1,5 @@
 // tooling
-import mergeSourceMaps from './merge-source-maps';
+import mergeSourceMaps from './merge-source-maps.mjs';
 import sassResolve from '@csstools/sass-import-resolve';
 import * as sass from 'sass';
 import { dirname, resolve as pathResolve } from 'path';
