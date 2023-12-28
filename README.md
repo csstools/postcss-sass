@@ -137,7 +137,7 @@ grunt.initConfig({
 [dart-sass]: https://github.com/sass/dart-sass
 [dart-sass options]: https://github.com/sass/dart-sass#javascript-api
 [PostCSS]: https://github.com/postcss/postcss
-[PostCSS Sass]: https://github.com/jonathantneal/postcss-sass
+[PostCSS Sass]: https://github.com/csstools/postcss-sass
 [Sass]: https://github.com/sass/dart-sass
 [SCSS Parser]: https://github.com/postcss/postcss-scss
 [discord]: https://discord.gg/bUadyRwkJS

@@ -1,11 +1,8 @@
 node_modules
-index.*.*
+.eslintcache
 *.log*
 *.result.css
-.*
 !.appveyor.yml
 !.editorconfig
 !.gitignore
-!.rollup.js
-!.tape.js
 !.github

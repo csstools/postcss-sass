@@ -5,8 +5,8 @@
   "author": "Jonathan Neal <jonathantneal@hotmail.com>",
   "license": "CC0-1.0",
   "repository": "jonathantneal/postcss-sass",
-  "homepage": "https://github.com/jonathantneal/postcss-sass#readme",
-  "bugs": "https://github.com/jonathantneal/postcss-sass/issues",
+  "homepage": "https://github.com/csstools/postcss-sass#readme",
+  "bugs": "https://github.com/csstools/postcss-sass/issues",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "exports": {
@@ -24,9 +24,9 @@
   ],
   "scripts": {
     "prepublishOnly": "npm test",
-    "pretest": "rollup -c .rollup.mjs --silent --exports 'auto'",
+    "pretest": "rollup -c rollup.mjs --silent --exports 'auto'",
     "test": "npm run test:js && npm run test:tape",
-    "test:js": "eslint **/*.mjs **/*.js --cache --ignore-path .gitignore --quiet",
+    "test:js": "eslint *.mjs src/*.mjs test/*.mjs --cache --ignore-path .gitignore --quiet",
     "test:tape": "node --test",
     "test:rewrite-expects": "REWRITE_EXPECTS=true node --test"
   },

@@ -1,5 +1,10 @@
 # Changes to PostCSS Sass
 
+### 5.1.0 (December 28, 2023)
+
+- Updated: `dart-sass` to 1.69.5 (minor)
+- Updated: `source-map` to 0.7.4 (patch)
+
 ### 5.0.1 (March 8, 2022)
 
 - Fixes an issue with import files not being sent for processors to pick up. [#31](https://github.com/csstools/postcss-sass/pull/31)
