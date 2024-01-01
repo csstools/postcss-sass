@@ -57,3 +57,13 @@ test('produces correct sourcemaps', async () => {
 		},
 	);
 });
+
+test('produces inline sourcemaps', async () => {
+	const result = await postcss([plugin]).process(source, {
+		from: 'basic.scss',
+		map: { inline: true },
+	});
+
+	assert.ok(result.css.includes('/*# sourceMappingURL='));
+	assert.equal(result.warnings().length, 0);
+});
