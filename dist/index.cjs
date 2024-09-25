@@ -28,7 +28,7 @@ var sass__namespace = /*#__PURE__*/_interopNamespaceDefault(sass);
 const sassMatch = /#sass$/;
 
 // returns merged source maps
-var mergeSourceMaps = ((...maps) => {
+var mergeSourceMaps = (...maps) => {
   // new sourcemap
   const generator = new sourceMap.SourceMapGenerator();
 
@@ -71,7 +71,7 @@ var mergeSourceMaps = ((...maps) => {
     mergedMap.sources = mergedMap.sources.map(source => source.replace(sassMatch, ''));
     return mergedMap;
   });
-});
+};
 function originalPositionFor(mapping, consumers) {
   // initial positioning
   let originalPosition = {

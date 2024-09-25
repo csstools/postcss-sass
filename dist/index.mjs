@@ -9,7 +9,7 @@ import { resolve, dirname } from 'path';
 const sassMatch = /#sass$/;
 
 // returns merged source maps
-var mergeSourceMaps = ((...maps) => {
+var mergeSourceMaps = (...maps) => {
   // new sourcemap
   const generator = new SourceMapGenerator();
 
@@ -52,7 +52,7 @@ var mergeSourceMaps = ((...maps) => {
     mergedMap.sources = mergedMap.sources.map(source => source.replace(sassMatch, ''));
     return mergedMap;
   });
-});
+};
 function originalPositionFor(mapping, consumers) {
   // initial positioning
   let originalPosition = {
