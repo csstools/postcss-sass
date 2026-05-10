@@ -50,7 +50,7 @@
     "eslint-config-dev": "^3.3.1",
     "postcss": "^8.4.32",
     "postcss-import": "^15.1.0",
-    "@csstools/postcss-tape": "^4.1.1",
+    "@csstools/postcss-tape": "^7.0.0",
     "rollup": "^4.9.1"
   },
   "eslintConfig": {
