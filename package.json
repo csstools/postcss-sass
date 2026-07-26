@@ -25,8 +25,7 @@
   "scripts": {
     "prepublishOnly": "npm test",
     "pretest": "rollup -c rollup.mjs --silent --exports 'auto'",
-    "test": "npm run test:js && npm run test:tape",
-    "test:js": "eslint *.mjs src/*.mjs test/*.mjs --cache --ignore-path .gitignore --quiet",
+    "test": "npm run test:tape",
     "test:tape": "node --test",
     "test:rewrite-expects": "REWRITE_EXPECTS=true node --test"
   },
@@ -45,49 +44,10 @@
     "@babel/core": "^7.23.6",
     "@babel/preset-env": "^7.23.6",
     "@rollup/plugin-babel": "^6.0.4",
-    "@babel/eslint-parser": "^7.23.3",
-    "eslint": "^8.56.0",
-    "eslint-config-dev": "^3.3.1",
     "postcss": "^8.4.32",
-    "postcss-import": "^15.1.0",
+    "postcss-import": "^16.1.0",
     "@csstools/postcss-tape": "^7.0.0",
     "rollup": "^4.9.1"
-  },
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true
-    },
-    "extends": "eslint:recommended",
-    "rules": {
-      "quotes": [
-        "error",
-        "single"
-      ],
-      "comma-dangle": [
-        "error",
-        "always-multiline"
-      ],
-      "semi": [
-        "error",
-        "always"
-      ],
-      "curly": "error",
-      "brace-style": "error",
-      "indent": [
-        "error",
-        "tab",
-        {
-          "SwitchCase": 1
-        }
-      ],
-      "radix": "error"
-    },
-    "parserOptions": {
-      "ecmaVersion": 2020,
-      "sourceType": "module"
-    },
-    "root": true
   },
   "postcssConfig": {
     "config": ".tape.js",
