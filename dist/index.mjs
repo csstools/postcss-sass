@@ -160,7 +160,9 @@ const plugin = (opts = {}) => {
       // promise sass results
       (resolve$1, reject) => sassEngine.render(
       // pass options directly into node-sass
-      Object.assign({}, opts, requiredSassConfig, {
+      Object.assign({}, opts, {
+        api: undefined
+      }, requiredSassConfig, {
         file: `${postConfig.from}#sass`,
         outFile: postConfig.from,
         data: postCSS,
