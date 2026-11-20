@@ -58,6 +58,20 @@ test('produces correct sourcemaps', async () => {
 	);
 });
 
+test('produces correct sourcemaps (modern api)', async () => {
+	const result = await postcss([plugin({ api: 'modern' })]).process(source, {
+		from: 'basic.scss',
+	});
+
+	assert.equal(result.css, expect);
+
+	const actual = result.map.toJSON();
+
+	assert.deepStrictEqual(actual.sources, ['basic.scss']);
+	assert.equal(actual.mappings, 'AAGA;EACC,WAHD;EAIC,gCAAA;AAFD');
+	assert.equal(actual.sourcesContent[0], source);
+});
+
 test('produces inline sourcemaps', async () => {
 	const result = await postcss([plugin]).process(source, {
 		from: 'basic.scss',

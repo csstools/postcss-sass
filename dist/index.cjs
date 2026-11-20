@@ -2,6 +2,7 @@ var sourceMap = require('source-map');
 var sassResolve = require('@csstools/sass-import-resolve');
 var sass = require('sass');
 var path = require('path');
+var url = require('url');
 
 function _interopNamespaceDefault(e) {
 	var n = Object.create(null);
@@ -131,6 +132,9 @@ const plugin = (opts = {}) => {
         css: postCSS,
         map: postMap
       } = root.toResult(postConfig);
+      if (opts && opts.api === 'modern') {
+        return runModern(opts, result, parse, postConfig, postCSS, postMap);
+      }
 
       // include paths
       const includePaths = [].concat(opts && opts.includePaths || []);
@@ -175,7 +179,9 @@ const plugin = (opts = {}) => {
       // promise sass results
       (resolve, reject) => sassEngine.render(
       // pass options directly into node-sass
-      Object.assign({}, opts, requiredSassConfig, {
+      Object.assign({}, opts, {
+        api: undefined
+      }, requiredSassConfig, {
         file: `${postConfig.from}#sass`,
         outFile: postConfig.from,
         data: postCSS,
@@ -240,6 +246,46 @@ const plugin = (opts = {}) => {
       });
     }
   };
+};
+
+// modern (compileStringAsync) api
+const runModern = async (opts, result, parse, postConfig, postCSS, postMap) => {
+  const {
+    api,
+    sass: engine,
+    includePaths,
+    ...sassOpts
+  } = opts;
+  const sassEngine = engine || sass__namespace;
+  const from = path.resolve(postConfig.from);
+  const url$1 = `${url.pathToFileURL(from)}#sass`;
+  const sassResult = await sassEngine.compileStringAsync(postCSS, {
+    ...sassOpts,
+    loadPaths: [path.dirname(from)].concat(includePaths || []).map(p => path.resolve(p)),
+    sourceMap: true,
+    sourceMapIncludeSources: true,
+    url: new URL(url$1)
+  });
+  for (const loaded of sassResult.loadedUrls) {
+    if (loaded.protocol !== 'file:') {
+      continue;
+    }
+    const file = url.fileURLToPath(loaded);
+    if (file !== from) {
+      result.messages.push({
+        type: 'dependency',
+        plugin: 'postcss-sass',
+        file,
+        parent: from
+      });
+    }
+  }
+  const prev = await mergeSourceMaps(postMap.toJSON(), sassResult.sourceMap);
+  result.root = parse(sassResult.css, Object.assign({}, postConfig, {
+    map: {
+      prev
+    }
+  }));
 };
 plugin.postcss = true;
 
