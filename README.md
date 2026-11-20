@@ -124,7 +124,31 @@ grunt.initConfig({
 
 ## Options
 
-[PostCSS Sass] options are directly forwarded to [dart-sass options].
+[PostCSS Sass] options are directly forwarded to [dart-sass options], along
+with the plugin option below.
+
+### api
+
+`api` selects which Sass JavaScript API is used: `'legacy'` or `'modern'`.
+It defaults to `'legacy'`; set `'modern'` to opt in.
+
+| `api` | Sass API | Options reference |
+| --- | --- | --- |
+| `'legacy'` (default) | `sass.render` | [legacy options][legacy api] |
+| `'modern'` | `sass.compileStringAsync` | [modern options][modern api] |
+
+```js
+postcssSass({ api: 'modern', loadPaths: ['node_modules'] })
+```
+
+- **`'legacy'`** keeps the behavior of previous releases. Dart Sass deprecates
+  the legacy API and removes it in 2.0, so it prints deprecation warnings on
+  recent versions.
+- **`'modern'`** opts in to the modern API, which needs a Sass release that
+  provides `compileStringAsync` (1.45 or newer) and keeps working once the
+  legacy API is removed. Pass modern options such as `importers`, `loadPaths`
+  and `style` instead of the legacy `importer`, `outputStyle` and
+  `indentType`. `includePaths` and `sass` work with both.
 
 [cli-img]: https://img.shields.io/travis/jonathantneal/postcss-sass.svg
 [git-img]: https://img.shields.io/badge/support-chat-blue.svg
@@ -136,6 +160,8 @@ grunt.initConfig({
 [Grunt PostCSS]: https://github.com/nDmitry/grunt-postcss
 [dart-sass]: https://github.com/sass/dart-sass
 [dart-sass options]: https://github.com/sass/dart-sass#javascript-api
+[legacy api]: https://sass-lang.com/documentation/js-api/interfaces/legacystringoptions/
+[modern api]: https://sass-lang.com/documentation/js-api/interfaces/stringoptions/
 [PostCSS]: https://github.com/postcss/postcss
 [PostCSS Sass]: https://github.com/csstools/postcss-sass
 [Sass]: https://github.com/sass/dart-sass

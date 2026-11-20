@@ -2,6 +2,7 @@ import { SourceMapGenerator, SourceMapConsumer } from 'source-map';
 import sassResolve from '@csstools/sass-import-resolve';
 import * as sass from 'sass';
 import { resolve, dirname } from 'path';
+import { pathToFileURL, fileURLToPath } from 'url';
 
 // tooling
 
@@ -112,6 +113,9 @@ const plugin = (opts = {}) => {
         css: postCSS,
         map: postMap
       } = root.toResult(postConfig);
+      if (opts && opts.api === 'modern') {
+        return runModern(opts, result, parse, postConfig, postCSS, postMap);
+      }
 
       // include paths
       const includePaths = [].concat(opts && opts.includePaths || []);
@@ -221,6 +225,46 @@ const plugin = (opts = {}) => {
       });
     }
   };
+};
+
+// modern (compileStringAsync) api
+const runModern = async (opts, result, parse, postConfig, postCSS, postMap) => {
+  const {
+    api,
+    sass: engine,
+    includePaths,
+    ...sassOpts
+  } = opts;
+  const sassEngine = engine || sass;
+  const from = resolve(postConfig.from);
+  const url = `${pathToFileURL(from)}#sass`;
+  const sassResult = await sassEngine.compileStringAsync(postCSS, {
+    ...sassOpts,
+    loadPaths: [dirname(from)].concat(includePaths || []).map(p => resolve(p)),
+    sourceMap: true,
+    sourceMapIncludeSources: true,
+    url: new URL(url)
+  });
+  for (const loaded of sassResult.loadedUrls) {
+    if (loaded.protocol !== 'file:') {
+      continue;
+    }
+    const file = fileURLToPath(loaded);
+    if (file !== from) {
+      result.messages.push({
+        type: 'dependency',
+        plugin: 'postcss-sass',
+        file,
+        parent: from
+      });
+    }
+  }
+  const prev = await mergeSourceMaps(postMap.toJSON(), sassResult.sourceMap);
+  result.root = parse(sassResult.css, Object.assign({}, postConfig, {
+    map: {
+      prev
+    }
+  }));
 };
 plugin.postcss = true;
 
